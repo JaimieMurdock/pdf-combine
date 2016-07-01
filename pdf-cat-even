@@ -1,11 +1,30 @@
 #!/usr/bin/env python
-import copy, sys
+import copy
+import glob
+import os.path
+import sys
+
 from pyPdf import PdfFileWriter, PdfFileReader
+
+
+
 output = PdfFileWriter()
 output_page_number = 0
 alignment = 2           # to align on even pages
-import glob
-files = glob.glob('*.pdf')
+
+
+
+path = sys.argv[-1]
+filepath = os.path.join(path, '*.pdf')
+
+
+
+print filepath
+files = glob.glob(os.path.join(path, '*.pdf'))
+print files
+
+
+
 for filename in sorted(files):
     # This code is executed for every file in turn
     print filename
@@ -22,6 +41,10 @@ for filename in sorted(files):
     while output_page_number % alignment != 0:
         output.addBlankPage()
         output_page_number += 1
-with open('out.pdf','wb') as outfile:
+
+
+
+filename = 'out.pdf'
+with open(filename, 'wb') as outfile:
     output.write(outfile)
 
